@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VT HR Bot - Employee Assistance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🎓 VT HR Bot</h1>
+                    <p>Employee Assistance & Policy Information</p>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Interface -->
+        <main class="chat-container">
+            <!-- Welcome Message -->
+            <div class="welcome-message" id="welcomeMessage">
+                <div class="welcome-content">
+                    <h2>👋 Welcome to VT HR Assistant</h2>
+                    <p>I can help you find information about:</p>
+                    <div class="suggestion-grid">
+                        <button class="suggestion-btn" data-query="employee benefits">
+                            💰 Employee Benefits
+                        </button>
+                        <button class="suggestion-btn" data-query="vacation policy">
+                            🏖️ Vacation Policy
+                        </button>
+                        <button class="suggestion-btn" data-query="performance review">
+                            📊 Performance Reviews
+                        </button>
+                        <button class="suggestion-btn" data-query="workplace safety">
+                            🛡️ Workplace Safety
+                        </button>
+                        <button class="suggestion-btn" data-query="retirement plans">
+                            🏦 Retirement Plans
+                        </button>
+                        <button class="suggestion-btn" data-query="employee training">
+                            📚 Training & Development
+                        </button>
+                    </div>
+                    <p class="welcome-footer">Ask me anything about HR policies and procedures!</p>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <div class="typing-content">
+                    <div class="avatar bot-avatar">🤖</div>
+                    <div class="typing-bubble">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Ask me about HR policies, benefits, or procedures..."
+                    autocomplete="off"
+                >
+                <button id="sendButton" class="send-btn" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <div class="input-footer">
+                <small>Powered by VT Document Search • All responses are based on official HR policies</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal" id="loadingModal">
+        <div class="modal-content">
+            <div class="loading-spinner"></div>
+            <h3>Initializing HR Assistant...</h3>
+            <p>Loading knowledge base and preparing to help you.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

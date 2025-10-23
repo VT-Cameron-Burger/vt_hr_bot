@@ -1,7 +1,8 @@
 # model_comparison_demo.py
 # Demo script to compare model performance
 
-from load_data import PDFVectorizer
+from load_data import load_data
+from model_comparison import ModelComparison
 import time
 
 def compare_models_demo():
@@ -10,14 +11,13 @@ def compare_models_demo():
     """
     print("=== Model Comparison Demo ===\n")
     
-    # Load the vectorizer with existing vectors
-    vectorizer = PDFVectorizer()
-    try:
-        vectorizer.load_vectors()
-        print("Loaded existing vectors (all-mpnet-base-v2)\n")
-    except:
+    # Load the vectorization system with existing vectors
+    system = load_data()
+    if not system:
         print("No existing vectors found. Please run load_data.py first.")
         return
+    
+    print("Loaded existing vectors (all-mpnet-base-v2)\n")
     
     # Test queries specific to HR domain
     test_queries = [
@@ -36,7 +36,7 @@ def compare_models_demo():
     
     for query in test_queries:
         start_time = time.time()
-        results = vectorizer.find_similar_documents(query, top_k=3)
+        results = system.search(query, top_k=3)
         end_time = time.time()
         
         search_time = end_time - start_time
@@ -79,6 +79,12 @@ def compare_models_demo():
     print("- Use all-mpnet-base-v2 for HR bot (current choice)")
     print("- Use multi-qa-mpnet-base-dot-v1 if primarily Q&A")
     print("- Use all-MiniLM-L6-v2 if speed is critical")
+    
+    print("\n" + "=" * 60)
+    print("MODEL COMPARISON AVAILABLE:")
+    print("To compare different models, run:")
+    print("  system.compare_models()")
+    print("This will test multiple embedding models on HR queries")
 
 if __name__ == "__main__":
     compare_models_demo()

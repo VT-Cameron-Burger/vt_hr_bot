@@ -3,4 +3,4 @@ sentence-transformers
 numpy
 torch
 transformers
-scikit-learn
+scikit-learnrequests
