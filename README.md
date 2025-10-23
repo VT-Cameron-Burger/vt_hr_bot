@@ -20,7 +20,7 @@ A Python script that downloads PDF files from a specified website.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/vt_hr_bot.git
+git clone https://github.com/VT-Cameron-Burger/vt_hr_bot.git
 cd vt_hr_bot
 ```
 

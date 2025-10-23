@@ -40,5 +40,5 @@ downloaded_pdfs/
 .DS_Store
 Thumbs.db
 
-# Repository creation script
-create_github_repo.py
+# Environment variables
+.env
