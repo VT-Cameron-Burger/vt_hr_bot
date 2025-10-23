@@ -30,6 +30,10 @@ wheels/
 # Downloaded PDFs
 downloaded_pdfs/
 
+# Vector embeddings and model files
+*.pkl
+*.pickle
+
 # IDE
 .idea/
 .vscode/
