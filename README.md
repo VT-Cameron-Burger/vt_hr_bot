@@ -52,3 +52,7 @@ The script will:
 ## Note
 
 Make sure you have permission to download files from the target website. Some websites may have restrictions on automated downloads.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
