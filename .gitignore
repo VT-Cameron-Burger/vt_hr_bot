@@ -39,3 +39,6 @@ downloaded_pdfs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Repository creation script
+create_github_repo.py
