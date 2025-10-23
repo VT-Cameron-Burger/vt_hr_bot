@@ -1,21 +1,41 @@
+from typing import List, Optional
 import os
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 
-def create_download_directory(directory):
-    """Create a directory if it doesn't exist."""
+def create_download_directory(directory: str) -> None:
+    """Create a directory if it doesn't exist.
+    
+    Args:
+        directory: Path to the directory to create.
+    """
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def is_valid_pdf_url(url):
-    """Check if the URL points to a PDF file."""
+def is_valid_pdf_url(url: str) -> bool:
+    """Check if the URL points to a PDF file.
+    
+    Args:
+        url: The URL to check.
+        
+    Returns:
+        bool: True if the URL ends with .pdf, False otherwise.
+    """
     parsed = urlparse(url)
     path = parsed.path.lower()
     return path.endswith('.pdf')
 
-def download_pdf(url, directory):
-    """Download a PDF file from the given URL."""
+def download_pdf(url: str, directory: str) -> bool:
+    """Download a PDF file from the given URL.
+    
+    Args:
+        url: The URL of the PDF to download.
+        directory: The directory to save the PDF in.
+        
+    Returns:
+        bool: True if download was successful, False otherwise.
+    """
     try:
         # Get the filename from the URL
         filename = os.path.join(directory, os.path.basename(urlparse(url).path))
@@ -38,14 +58,21 @@ def download_pdf(url, directory):
         print(f"Error downloading {url}: {str(e)}")
         return False
 
-def get_pdf_links(url):
-    """Extract all PDF links from a webpage."""
+def get_pdf_links(url: str) -> List[str]:
+    """Extract all PDF links from a webpage.
+    
+    Args:
+        url: The URL of the webpage to scan for PDF links.
+        
+    Returns:
+        List[str]: A list of URLs to PDF files found on the page.
+    """
     try:
         response = requests.get(url, timeout=30)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        pdf_links = []
+        pdf_links: List[str] = []
         # Find all links on the page
         for link in soup.find_all('a'):
             href = link.get('href')
@@ -60,7 +87,8 @@ def get_pdf_links(url):
         print(f"Error fetching webpage {url}: {str(e)}")
         return []
 
-def main():
+def main() -> None:
+    """Main function to run the PDF downloader."""
     # Get the target website URL from user input
     target_url = input("Enter the target website URL: ")
     
