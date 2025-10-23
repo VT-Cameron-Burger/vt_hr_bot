@@ -76,9 +76,11 @@ def get_pdf_links(url: str) -> List[str]:
         # Find all links on the page
         for link in soup.find_all('a'):
             href = link.get('href')
-            if href:
+            if href and isinstance(href, (str, list)):  # href can be str or list of str
+                # Convert to string if it's a list
+                href_str = href[0] if isinstance(href, list) else href
                 # Convert relative URLs to absolute URLs
-                full_url = urljoin(url, href)
+                full_url = urljoin(url, str(href_str))  # Ensure we pass a string
                 if is_valid_pdf_url(full_url):
                     pdf_links.append(full_url)
         
