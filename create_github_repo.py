@@ -76,8 +76,8 @@ def main():
         print("export GITHUB_TOKEN='your_token_here'")
         print("\nTo create a token:")
         print("1. Go to https://github.com/settings/tokens")
-        print("2. Click 'Generate new token'")
-        print("3. Select 'repo' scope")
+        print("2. Click 'Generate new token (classic)'")
+        print("3. Select only 'public_repo' scope (or 'repo' if you need to create private repos)")
         print("4. Copy the token and set it as an environment variable")
         sys.exit(1)
     

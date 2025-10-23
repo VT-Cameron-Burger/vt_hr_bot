@@ -50,14 +50,12 @@ The script will:
 
 ## Required Token Permissions
 
-The GitHub Personal Access Token needs the following scope:
-- `repo` - Full control of private repositories
+The GitHub Personal Access Token only needs one of the following scopes:
+- `public_repo` - Access public repositories (recommended if you only need to create public repos)
+- `repo` - Full repository access (only needed if you want to create private repos)
 
-This provides all necessary permissions to:
-- Create new repositories
-- Push code to repositories
-- Manage repository settings
-- Set up remote connections
+The script by default creates public repositories, so the `public_repo` scope is sufficient.
+The actual repository operations (pushing code, etc.) will use your git credentials, not the token.
 
 ## License
 
