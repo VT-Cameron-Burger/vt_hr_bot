@@ -5,9 +5,10 @@ import os
 import sys
 import json
 import logging
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 import threading
+import uuid
 import webbrowser
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from load_data import load_data
+from llm import LLMResponder
 
 logger = logging.getLogger(__name__)
 
@@ -91,19 +93,23 @@ class HRBotHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': 'HR system not initialized'}, 503)
                 return
             
+            # Create a unique request id for tracing/cost-logging
+            request_id = uuid.uuid4().hex
+
             # Search for similar documents
             results = self.vectorizer.search(query, top_k=3)
             
             if results:
                 # Generate response based on top results
                 top_result = results[0]
-                answer = self.generate_answer(query, results)
+                answer = self.generate_answer(query, results, request_id=request_id)
                 sources = [r['metadata']['source_file'] for r in results]
                 
                 response = {
                     'answer': answer,
                     'sources': sources,
                     'confidence': top_result['similarity_score'],
+                    'request_id': request_id,
                     'query': query
                 }
             else:
@@ -134,16 +140,45 @@ class HRBotHandler(BaseHTTPRequestHandler):
             logger.error(f"Error getting status: {e}")
             self.send_json_response({'error': 'Failed to get status'}, 500)
     
-    def generate_answer(self, query, results):
-        """Generate a human-readable answer from search results"""
+    def generate_answer(self, query, results, request_id: str = None):
+        """Generate a human-readable answer from search results.
+
+        If an LLM is attached to the handler (self.llm), prefer using it to
+        synthesize an answer from the top results. Otherwise fall back to the
+        original rule-based summarization/preview logic.
+        """
         if not results:
             return "I couldn't find relevant information for your query. Please try rephrasing your question or contact HR directly."
-        
+
+        # If an LLM is available, use it to generate a response from the top results
+        try:
+            if hasattr(self, 'llm') and self.llm is not None:
+                # Let the LLM synthesize an answer from the returned chunks
+                # Use slightly more generous generation parameters for helpful answers
+                llm_answer = self.llm.generate(
+                    query,
+                    results,
+                    max_new_tokens=200,
+                    do_sample=True,
+                    temperature=0.3,
+                    top_p=0.95,
+                    num_beams=2,
+                    request_id=request_id,
+                )
+                # If the LLM produced something reasonable, return it
+                if llm_answer and len(llm_answer.strip()) > 5:
+                    return llm_answer
+        except Exception as e:
+            # On any LLM failure, log and fall back to rule-based answer
+            logger = logging.getLogger(__name__)
+            logger.warning(f"LLM generation failed: {e}. Falling back to rule-based answer.")
+
+        # Rule-based fallback (existing behavior)
         top_result = results[0]
         document = top_result['document']
         source_file = top_result['metadata']['source_file']
         similarity = top_result['similarity_score']
-        
+
         # If similarity is very low, provide a more cautious response
         if similarity < 0.3:
             answer = f"I found some potentially relevant information in {source_file}, but the match isn't very strong (similarity: {similarity:.1%}). You may want to review the full document or contact HR for more specific guidance."
@@ -153,27 +188,27 @@ class HRBotHandler(BaseHTTPRequestHandler):
                 if unique_sources:
                     answer += f"\n\nOther potentially relevant documents: {', '.join(unique_sources)}"
             return answer
-        
+
         # Clean the document text first
         cleaned_document = self.clean_text(document)
-        
+
         # Try to extract relevant sentences
         sentences = self.extract_relevant_sentences(cleaned_document, query)
-        
+
         if sentences and len(sentences) > 100:  # Only use if we got meaningful content
             answer = f"Based on {source_file}:\n\n{sentences}"
         else:
             # Fallback: provide a summary with document reference
             preview = self.get_clean_preview(cleaned_document, max_length=200)
             answer = f"I found relevant information in {source_file}. Here's a preview:\n\n{preview}\n\n**Note**: Due to document formatting, please refer to the original {source_file} for complete and accurate information."
-        
+
         # Add other sources
         if len(results) > 1:
             other_sources = [r['metadata']['source_file'] for r in results[1:]]
             unique_sources = list(dict.fromkeys(other_sources))  # Remove duplicates
             if unique_sources:
                 answer += f"\n\nAdditional relevant documents: {', '.join(unique_sources)}"
-        
+
         return answer
     
     def get_clean_preview(self, text, max_length=200):
@@ -344,11 +379,13 @@ class HRBotHandler(BaseHTTPRequestHandler):
         """Override to use our logger"""
         logger.info(f"{self.address_string()} - {format % args}")
 
-def create_handler(vectorizer):
-    """Create a handler class with the vectorizer injected"""
+def create_handler(vectorizer, llm=None):
+    """Create a handler class with the vectorizer and optional llm injected"""
     class HandlerWithVectorizer(HRBotHandler):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, vectorizer=vectorizer, **kwargs)
+            # attach LLM if provided
+            self.llm = llm
     return HandlerWithVectorizer
 
 def start_server(port=8000, auto_open=True):
@@ -371,8 +408,15 @@ def start_server(port=8000, auto_open=True):
         print(f"❌ Error loading HR database: {e}")
         return
     
+    # Create LLM responder (small local model for development)
+    try:
+        llm = LLMResponder(model_name="google/flan-t5-small")
+    except Exception as e:
+        print(f"⚠️  Could not create LLMResponder: {e}. Continuing without LLM.")
+        llm = None
+
     # Create server
-    handler_class = create_handler(vectorizer)
+    handler_class = create_handler(vectorizer, llm=llm)
     server = HTTPServer(('localhost', port), handler_class)
     
     print(f"🚀 Server starting on http://localhost:{port}")

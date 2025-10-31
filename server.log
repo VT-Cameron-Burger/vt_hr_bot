@@ -1,0 +1,33 @@
+🚀 Starting VT HR Bot Server...
+📁 Project root: /Users/perrycosier/VT AI FOR BUSINESS/vt_hr_bot
+🔧 Activating virtual environment...
+📦 Checking dependencies...
+🌐 Starting server on port 8000...
+📊 Loading vector database...
+/Users/perrycosier/VT AI FOR BUSINESS/vt_hr_bot/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2025-10-31 04:19:29,709 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: mps
+2025-10-31 04:19:29,709 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-mpnet-base-v2
+2025-10-31 04:19:31,851 - vectorizer - INFO - Vectors loaded from pdf_vectors.pkl
+2025-10-31 04:19:31,851 - vectorizer - INFO - Original model: all-mpnet-base-v2
+2025-10-31 04:19:31,851 - vectorizer - INFO - Embedding dimension: 768
+Device set to use mps:0
+The model 'T5ForConditionalGeneration' is not supported for text-generation. Supported models are ['PeftModelForCausalLM', 'ApertusForCausalLM', 'ArceeForCausalLM', 'AriaTextForCausalLM', 'BambaForCausalLM', 'BartForCausalLM', 'BertLMHeadModel', 'BertGenerationDecoder', 'BigBirdForCausalLM', 'BigBirdPegasusForCausalLM', 'BioGptForCausalLM', 'BitNetForCausalLM', 'BlenderbotForCausalLM', 'BlenderbotSmallForCausalLM', 'BloomForCausalLM', 'BltForCausalLM', 'CamembertForCausalLM', 'LlamaForCausalLM', 'CodeGenForCausalLM', 'CohereForCausalLM', 'Cohere2ForCausalLM', 'CpmAntForCausalLM', 'CTRLLMHeadModel', 'Data2VecTextForCausalLM', 'DbrxForCausalLM', 'DeepseekV2ForCausalLM', 'DeepseekV3ForCausalLM', 'DiffLlamaForCausalLM', 'DogeForCausalLM', 'Dots1ForCausalLM', 'ElectraForCausalLM', 'Emu3ForCausalLM', 'ErnieForCausalLM', 'Ernie4_5ForCausalLM', 'Ernie4_5_MoeForCausalLM', 'Exaone4ForCausalLM', 'FalconForCausalLM', 'FalconH1ForCausalLM', 'FalconMambaForCausalLM', 'FlexOlmoForCausalLM', 'FuyuForCausalLM', 'GemmaForCausalLM', 'Gemma2ForCausalLM', 'Gemma3ForConditionalGeneration', 'Gemma3ForCausalLM', 'Gemma3nForConditionalGeneration', 'Gemma3nForCausalLM', 'GitForCausalLM', 'GlmForCausalLM', 'Glm4ForCausalLM', 'Glm4MoeForCausalLM', 'GotOcr2ForConditionalGeneration', 'GPT2LMHeadModel', 'GPT2LMHeadModel', 'GPTBigCodeForCausalLM', 'GPTNeoForCausalLM', 'GPTNeoXForCausalLM', 'GPTNeoXJapaneseForCausalLM', 'GptOssForCausalLM', 'GPTJForCausalLM', 'GraniteForCausalLM', 'GraniteMoeForCausalLM', 'GraniteMoeHybridForCausalLM', 'GraniteMoeSharedForCausalLM', 'HeliumForCausalLM', 'HunYuanDenseV1ForCausalLM', 'HunYuanMoEV1ForCausalLM', 'JambaForCausalLM', 'JetMoeForCausalLM', 'Lfm2ForCausalLM', 'LlamaForCausalLM', 'Llama4ForCausalLM', 'Llama4ForCausalLM', 'LongcatFlashForCausalLM', 'MambaForCausalLM', 'Mamba2ForCausalLM', 'MarianForCausalLM', 'MBartForCausalLM', 'MegaForCausalLM', 'MegatronBertForCausalLM', 'MiniMaxForCausalLM', 'MinistralForCausalLM', 'MistralForCausalLM', 'MixtralForCausalLM', 'MllamaForCausalLM', 'ModernBertDecoderForCausalLM', 'MoshiForCausalLM', 'MptForCausalLM', 'MusicgenForCausalLM', 'MusicgenMelodyForCausalLM', 'MvpForCausalLM', 'NemotronForCausalLM', 'OlmoForCausalLM', 'Olmo2ForCausalLM', 'Olmo3ForCausalLM', 'OlmoeForCausalLM', 'OpenLlamaForCausalLM', 'OpenAIGPTLMHeadModel', 'OPTForCausalLM', 'PegasusForCausalLM', 'PersimmonForCausalLM', 'PhiForCausalLM', 'Phi3ForCausalLM', 'Phi4MultimodalForCausalLM', 'PhimoeForCausalLM', 'PLBartForCausalLM', 'ProphetNetForCausalLM', 'QDQBertLMHeadModel', 'Qwen2ForCausalLM', 'Qwen2MoeForCausalLM', 'Qwen3ForCausalLM', 'Qwen3MoeForCausalLM', 'Qwen3NextForCausalLM', 'RecurrentGemmaForCausalLM', 'ReformerModelWithLMHead', 'RemBertForCausalLM', 'RobertaForCausalLM', 'RobertaPreLayerNormForCausalLM', 'RoCBertForCausalLM', 'RoFormerForCausalLM', 'RwkvForCausalLM', 'SeedOssForCausalLM', 'SmolLM3ForCausalLM', 'Speech2Text2ForCausalLM', 'StableLmForCausalLM', 'Starcoder2ForCausalLM', 'TransfoXLLMHeadModel', 'TrOCRForCausalLM', 'VaultGemmaForCausalLM', 'WhisperForCausalLM', 'XGLMForCausalLM', 'XLMWithLMHeadModel', 'XLMProphetNetForCausalLM', 'XLMRobertaForCausalLM', 'XLMRobertaXLForCausalLM', 'XLNetLMHeadModel', 'xLSTMForCausalLM', 'XmodForCausalLM', 'ZambaForCausalLM', 'Zamba2ForCausalLM'].
+2025-10-31 04:19:34,209 - __main__ - INFO - 127.0.0.1 - "GET / HTTP/1.1" 200 -
+2025-10-31 04:19:34,217 - __main__ - INFO - 127.0.0.1 - "GET /styles.css HTTP/1.1" 200 -
+2025-10-31 04:19:34,217 - __main__ - INFO - 127.0.0.1 - "GET /script.js HTTP/1.1" 200 -
+2025-10-31 04:19:36,234 - __main__ - INFO - 127.0.0.1 - "GET /api/status HTTP/1.1" 200 -
+🤖 Starting VT HR Bot Server...
+==================================================
+Loading HR document database...
+Loading existing vectors...
+✅ Loaded 1 document chunks
+🚀 Server starting on http://localhost:8000
+Press Ctrl+C to stop the server
+==================================================
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.22it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  6.22it/s]
+2025-10-31 04:19:50,699 - __main__ - INFO - 127.0.0.1 - "POST /api/query HTTP/1.1" 200 -
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:01<00:00,  1.46s/it]Batches: 100%|██████████| 1/1 [00:01<00:00,  1.46s/it]
+2025-10-31 04:27:21,882 - __main__ - INFO - 127.0.0.1 - "POST /api/query HTTP/1.1" 200 -
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
