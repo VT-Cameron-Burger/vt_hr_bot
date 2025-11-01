@@ -161,4 +161,23 @@
       "responses_all_count": 1
     }
   }
+  ,
+  {
+    "requestId": "request_pdf_chunk_00000000-0000-0000-0000-000000000009",
+    "message": "Show an example where the bot responds with a document chunk and a downloadable PDF link.",
+    "response": "Here is a relevant excerpt from the policy document:\n\n\"Employees should submit time-off requests through the HR portal at https://portal.example.edu/timeoff and notify their manager at least two weeks in advance.\" [dummy.pdf]\n\nYou can download the full PDF here: downloaded_pdfs/dummy.pdf",
+    "details": {
+      "modified_user_prompt": null,
+      "generated_prompts": null,
+      "tools_invoked": [
+        "read_file",
+        "run_in_terminal"
+      ],
+      "files_changed": [
+        "downloaded_pdfs/dummy.pdf"
+      ],
+      "commit_messages_detected": null,
+      "responses_all_count": 1
+    }
+  }
 ]
