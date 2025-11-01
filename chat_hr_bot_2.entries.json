@@ -165,7 +165,7 @@
   {
     "requestId": "request_pdf_chunk_00000000-0000-0000-0000-000000000009",
     "message": "Show an example where the bot responds with a document chunk and a downloadable PDF link.",
-    "response": "Here is a relevant excerpt from the policy document:\n\n\"Employees should submit time-off requests through the HR portal at https://portal.example.edu/timeoff and notify their manager at least two weeks in advance.\" [dummy.pdf]\n\nYou can download the full PDF here: downloaded_pdfs/dummy.pdf",
+  "response": "Here is a relevant excerpt from the policy document:\n\n\"Employees should submit time-off requests through the HR portal at https://portal.example.edu/timeoff and notify their manager at least two weeks in advance.\" [dummy.pdf]\n\nYou can download the full PDF here: https://raw.githubusercontent.com/VT-Cameron-Burger/vt_hr_bot/main/downloaded_pdfs/dummy.pdf",
     "details": {
       "modified_user_prompt": null,
       "generated_prompts": null,
